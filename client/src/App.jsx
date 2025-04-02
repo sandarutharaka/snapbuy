@@ -59,7 +59,6 @@ function App() {
           <Route path="*" element={<NotFound/>}></Route>
           <Route path="/unauth-page" element={<UnauthPage/>}></Route>
         </Routes>
-        <Toaster/>
       </div>
     </>
   )

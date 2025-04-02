@@ -20,11 +20,13 @@ function AuthLogin() {
     dispatch(loginUser(formData)).then((data) => {
       if (data?.payload?.success) {
         toast.success(data?.payload?.message);
-      } else {
-        toast.error(data?.payload?.message || "Login failed!");
+      }else
+      {
+        toast.error(data?.payload?.message)
       }
     });
   }
+
   return (
     <div className="mx-auto w-full max-w-md space-y-6">
       <div className="text-center">
