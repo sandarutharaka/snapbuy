@@ -37,7 +37,7 @@ function CommonForm({ formControls,formData ,setFormData, onsubmit,buttonText })
         element = (
           <Select onValueChange={(value)=>setFormData({
             ...formData,
-            [getControlItem.name]: event.target.value,
+            [getControlItem.name]: value,
           })} value={value}>
             <SelectTrigger className="w-full">
                 <SelectValue placeholder={getControlItem.placeholder}/>

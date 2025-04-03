@@ -30,7 +30,7 @@ function App() {
     dispatch(checkAuth())
   },[dispatch])
 
-  if(isLoading) return <Skeleton className="w-[800px] h-[600px] " />
+  if(isLoading) return <Skeleton className="w-[800px]  h-[600px] " />
 
 
   console.log(isLoading,user);
