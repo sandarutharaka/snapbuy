@@ -2,3 +2,6 @@ mongodb
 
 username : sandarumine
 password : eddQoJec6iGHPJpe
+
+claoud
+tharakamy
