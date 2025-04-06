@@ -8,10 +8,10 @@ const initialState = {
 
 export const addNewProduct = createAsyncThunk(
   "/products/addnewproduct",
-  async (formdata) => {
+  async (formData) => {
     const result = await axios.post(
       "http://localhost:5000/api/admin/products/add",
-      formdata,
+      formData,
       {
         headers: {
           "Content-Type": "application/json",
@@ -34,10 +34,10 @@ export const fetchAllProducts = createAsyncThunk(
 
   export const editProduct = createAsyncThunk(
     "/products/editProduct",
-    async ({id,formdata}) => {
+    async ({id,formData}) => {
       const result = await axios.put(
         `http://localhost:5000/api/admin/edit/${id}`,
-        formdata,
+        formData,
         {
           headers: {
             "Content-Type": "application/json",
@@ -70,10 +70,8 @@ const AdminProductSlice = createSlice({
     builder.addCase(fetchAllProducts.pending, (state)=>{
         state.isLoading = true
     }).addCase(fetchAllProducts.fulfilled,(state,action)=>{
-        console.log(action.payload);
-        
         state.isLoading =false
-        state.productList =action.payload
+        state.productList =action.payload.data
     }).addCase(fetchAllProducts.rejected,(state,action)=>{
         state.isLoading =false
         state.productList =[]

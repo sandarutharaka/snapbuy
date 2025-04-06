@@ -11,7 +11,7 @@ import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 
 
-function CommonForm({ formControls,formData ,setFormData, onsubmit,buttonText }) {
+function CommonForm({ formControls,formData ,setFormData, onSubmit,buttonText }) {
   function renderInputsByComponentType(getControlItem) {
     let element = null;
     const value =formData[getControlItem.name] || ''
@@ -86,7 +86,7 @@ function CommonForm({ formControls,formData ,setFormData, onsubmit,buttonText })
   }
 
   return (
-    <form action="" onSubmit={onsubmit}>
+    <form action="" onSubmit={onSubmit}>
       <div className="flex flex-col gap-3 mb-5">
         {formControls.map((controlItem) => (
           <div className="grid  w-full gap-1.5" key={controlItem.name}>

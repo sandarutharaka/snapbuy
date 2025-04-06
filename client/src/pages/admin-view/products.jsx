@@ -1,4 +1,5 @@
 import ProductImageUpload from "@/components/admin-view-c/image-upload";
+import AdminProductTile from "@/components/admin-view-c/product-tile";
 import CommonForm from "@/components/common/form";
 import { Button } from "@/components/ui/button";
 import {
@@ -8,9 +9,10 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { addProductFormElements } from "@/config";
-import { fetchAllProducts } from "@/store/admin/product-slice";
+import { addNewProduct, fetchAllProducts } from "@/store/admin/product-slice";
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "sonner";
 
 
 const initialFormData = {
@@ -26,26 +28,37 @@ const initialFormData = {
 
 const AdminProducts = () => {
   const [openCreateProduct, setOpenCreateProduct] = useState(false);
-  const [formdata, setFormdata] = useState(initialFormData);
+  const [formData, setFormdata] = useState(initialFormData);
   const [imageFile, setImageFile] = useState(null);
   const [uploadedImageUrl, setUploadedImageUrl] = useState("");
-  const [imageLoadingState,setImageLoadingState]=useState(false)
-
-  const {productList} =useSelector(state=>state.adminProducts)
-const dispatch =useDispatch();
+  const [imageLoadingState, setImageLoadingState] = useState(false);
+  const { productList } = useSelector((state) => state.adminProducts);
+  const dispatch = useDispatch();
 
   function onSubmit(event) {
     event.preventDefault();
-    
+    dispatch(
+      addNewProduct({
+        ...formData,
+        image: uploadedImageUrl,
+      })
+    ).then((data) => {
+      console.log(data);
+      if(data?.payload?.success){
+        setImageFile(null);
+        setFormdata(initialFormData)
+        setOpenCreateProduct(false)
+        dispatch(fetchAllProducts)
+        toast.success('Product Added Successfully')
+      }
+    });
   }
 
-  useEffect(()=>{
-    dispatch(fetchAllProducts())
-  },[dispatch])
+  useEffect(() => {
+    dispatch(fetchAllProducts());
+  }, [dispatch]);
 
-
-  console.log(productList,"productList");
-  
+  console.log(productList, "productList", uploadedImageUrl);
 
   return (
     <Fragment>
@@ -55,6 +68,10 @@ const dispatch =useDispatch();
         </Button>
       </div>
       <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4 ">
+        {
+          productList && productList.length > 0 ? productList.map(productItem=><AdminProductTile product={productItem}/>) : null
+        }
+      </div>
         <Sheet
           open={openCreateProduct}
           onOpenChange={() => setOpenCreateProduct(false)}
@@ -69,13 +86,12 @@ const dispatch =useDispatch();
               uploadedImageUrl={uploadedImageUrl}
               setUploadedImageUrl={setUploadedImageUrl}
               setImageLoadingState={setImageLoadingState}
-              imageLoadingState ={imageLoadingState}
-              
+              imageLoadingState={imageLoadingState}
             />
             <div className="px-6">
               <CommonForm
-                onsubmit={onSubmit}
-                formData={formdata}
+                onSubmit={onSubmit}
+                formData={formData}
                 setFormData={setFormdata}
                 buttonText="Add"
                 formControls={addProductFormElements}
@@ -83,7 +99,6 @@ const dispatch =useDispatch();
             </div>
           </SheetContent>
         </Sheet>
-      </div>
     </Fragment>
   );
 };
