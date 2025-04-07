@@ -48,7 +48,7 @@ const AdminProducts = () => {
         setImageFile(null);
         setFormdata(initialFormData)
         setOpenCreateProduct(false)
-        dispatch(fetchAllProducts)
+        dispatch(fetchAllProducts())
         toast.success('Product Added Successfully')
       }
     });

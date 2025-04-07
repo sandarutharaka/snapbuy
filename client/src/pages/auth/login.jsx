@@ -15,7 +15,7 @@ function AuthLogin() {
   const [formData, setFormData] = useState(initialState);
   const dispatch = useDispatch();
 
-  function onsubmit(event) {
+  function onSubmit(event) {
     event.preventDefault();
     dispatch(loginUser(formData)).then((data) => {
       if (data?.payload?.success) {
@@ -48,7 +48,7 @@ function AuthLogin() {
         buttonText={"Log In"}
         formData={formData}
         setFormData={setFormData}
-        onsubmit={onsubmit}
+        onSubmit={onSubmit}
       />
     </div>
   );

@@ -17,7 +17,7 @@ function AuthRegister() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  function onsubmit(event) {
+  function onSubmit(event) {
     event.preventDefault();
     dispatch(registerUser(formData)).then((data) => {
       if (data?.payload?.success) {
@@ -51,7 +51,7 @@ function AuthRegister() {
         buttonText={"Sign Up"}
         formData={formData}
         setFormData={setFormData}
-        onsubmit={onsubmit}
+        onSubmit={onSubmit}
       />
     </div>
   );
