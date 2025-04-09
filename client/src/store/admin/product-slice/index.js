@@ -36,7 +36,8 @@ export const fetchAllProducts = createAsyncThunk(
     "/products/editProduct",
     async ({id,formData}) => {
       const result = await axios.put(
-        `http://localhost:5000/api/admin/edit/${id}`,
+        `http://localhost:5000/api/admin/products/edit/${id}`,
+        
         formData,
         {
           headers: {
@@ -53,7 +54,7 @@ export const fetchAllProducts = createAsyncThunk(
     "/products/deleteProduct",
     async (id) => {
       const result = await axios.delete(
-        `http://localhost:5000/api/admin/delete/${id}`
+        `http://localhost:5000/api/admin/products/delete/${id}`
       );
       return result?.data
     }

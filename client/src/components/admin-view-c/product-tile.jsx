@@ -1,11 +1,11 @@
 import { Button } from "../ui/button";
 import { Card, CardContent, CardFooter } from "../ui/card";
 
-function AdminProductTile({ product ,setFormData,setOpenCreateProduct,setCurrentEditedId }) {
+function AdminProductTile({ product ,setFormData,setOpenCreateProduct,setCurrentEditedId ,handleDelete}) {
   return (
     <Card className="w-full max-w-sm mx-auto pt-0 pb-6 overflow-hidden">
       <div>
-        <div className="">
+        <div  className="">
           <img
             src={product?.image}
             alt={product.title}
@@ -31,8 +31,10 @@ function AdminProductTile({ product ,setFormData,setOpenCreateProduct,setCurrent
         <CardFooter className="mt-4 flex justify-around items-center">
           <Button onClick={()=>{
             setOpenCreateProduct(true)
+            setCurrentEditedId(product?._id)
+            setFormData(product)
           }} className="px-6">Edit</Button>
-          <Button className="px-4">Delete</Button>
+          <Button onClick={()=>handleDelete(product?._id)} className="px-4">Delete</Button>
         </CardFooter>
       </div>
     </Card>
