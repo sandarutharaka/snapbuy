@@ -33,6 +33,7 @@ const AdminProducts = () => {
   const [uploadedImageUrl, setUploadedImageUrl] = useState("");
   const [imageLoadingState, setImageLoadingState] = useState(false);
   const { productList } = useSelector((state) => state.adminProducts);
+  const [currentEditedId,setCurrentEditedId] = useState(null)
   const dispatch = useDispatch();
 
   function onSubmit(event) {
@@ -69,7 +70,7 @@ const AdminProducts = () => {
       </div>
       <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4 ">
         {
-          productList && productList.length > 0 ? productList.map(productItem=><AdminProductTile product={productItem}/>) : null
+          productList && productList.length > 0 ? productList.map(productItem=><AdminProductTile setFormData={setFormdata} setOpenCreateProduct={setOpenCreateProduct} setCurrentEditedId={setCurrentEditedId} product={productItem}/>) : null
         }
       </div>
         <Sheet
