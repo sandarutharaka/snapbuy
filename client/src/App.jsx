@@ -32,8 +32,6 @@ function App() {
 
   if(isLoading) return <Skeleton className="w-[800px]  h-[600px] " />
 
-
-  console.log(isLoading,user);
   
   return (
     <>
