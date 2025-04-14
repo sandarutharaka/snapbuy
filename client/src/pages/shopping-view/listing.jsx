@@ -3,7 +3,7 @@ import ShoppingProductTile from "@/components/shopping-view-c/product-tile";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuRadioGroup,DropdownMenuContent, DropdownMenuRadioItem, DropdownMenuTrigger} from "@/components/ui/dropdown-menu";
 import { sortOptions } from "@/config";
-import { fetchAllFilteredProducts } from "@/store/shop/products-slice";
+import { fetchAllFilteredProducts, fetchProductDetails } from "@/store/shop/products-slice";
 import { ArrowUpDown } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,7 +30,7 @@ function createSearchParamsHelper(filterParams){
 
 const ShoppingListing = () => {
   const dispatch= useDispatch()
-  const { productList } = useSelector((state) => state.shopProducts);
+  const { productList,productDetails } = useSelector((state) => state.shopProducts);
   const [filters,setFilters]=useState({})
   const[sort,setSort]=useState(null)
   const [searchParams , setSearchParams]=useSearchParams()
@@ -65,6 +65,12 @@ const ShoppingListing = () => {
     
   }
 
+  function handleGetProductDetails(getCurrentProductId){
+      console.log(getCurrentProductId);
+      dispatch(fetchProductDetails(getCurrentProductId))
+      
+  }
+
   useEffect(
     ()=>{if(filters&& Object.keys(filters).length > 0){
       const createQueryString = createSearchParamsHelper(filters)
@@ -83,7 +89,7 @@ const ShoppingListing = () => {
       dispatch(fetchAllFilteredProducts({filterParams:filters ,sortParams :sort}));
     },[dispatch,sort,filters]);
 
-    console.log(filters,searchParams, "filters");
+    console.log(productDetails, "productDetails");
     
   return (
     <div className="grid grid-cols-1 md:grid-cols-[300px_1fr] gap-6 p-4 md:p-6">
@@ -121,7 +127,7 @@ const ShoppingListing = () => {
             {
               productList && productList.length > 0 ?
               productList.map((productItem)=>(
-                <ShoppingProductTile key={productItem?.id} product={productItem}/>
+                <ShoppingProductTile handleGetProductDetails={handleGetProductDetails} key={productItem?.id} product={productItem}/>
               )) : null
             }
         </div>

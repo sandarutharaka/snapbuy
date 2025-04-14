@@ -8,11 +8,20 @@ const registerUser = async (req, res) => {
 
   try {
     const checkUser = await User.findOne({ email });
+    const checkUserName = await User.findOne({ userName });
     if (checkUser)
       return res.json({
         success: false,
         message: "User already exists",
       });
+
+      if (checkUserName)
+        return res.json({
+          success: false,
+          message: "Username Already Exits",
+        });
+
+
     const hashPassword = await bcrypt.hash(password, 12);
     const newUser = new User({
       userName,

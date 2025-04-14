@@ -26,6 +26,8 @@ function AuthRegister() {
       } else {
         toast.error(data?.payload?.message);
       }
+    }).catch((error) => {
+      toast.error(error?.message || "Server error");
     });
   }
   console.log(formData);
