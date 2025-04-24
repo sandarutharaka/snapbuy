@@ -77,6 +77,42 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
                   <p className="text-muted-foreground">This IS As Awesome Product</p>
                 </div>
               </div>
+              <div className="flex gap-4 items-center">
+                <Avatar className="w-10 h-10 border">
+                  <AvatarFallback>SM</AvatarFallback>
+                </Avatar>
+                <div className="grid gap-1">
+                  <div className="flex items-center gap-2">
+                    <h3 className="font-bold">sandaru</h3>
+                  </div>
+                  <div className="flex items-center gap-0.5">
+                    <StarIcon className="w-5 h-5 fill-primary" />
+                    <StarIcon className="w-5 h-5 fill-primary" />
+                    <StarIcon className="w-5 h-5 fill-primary" />
+                    <StarIcon className="w-5 h-5 fill-primary" />
+                    <StarIcon className="w-5 h-5 fill-primary" />
+                  </div>
+                  <p className="text-muted-foreground">This IS As Awesome Product</p>
+                </div>
+              </div>
+              <div className="flex gap-4 items-center">
+                <Avatar className="w-10 h-10 border">
+                  <AvatarFallback>SM</AvatarFallback>
+                </Avatar>
+                <div className="grid gap-1">
+                  <div className="flex items-center gap-2">
+                    <h3 className="font-bold">sandaru</h3>
+                  </div>
+                  <div className="flex items-center gap-0.5">
+                    <StarIcon className="w-5 h-5 fill-primary" />
+                    <StarIcon className="w-5 h-5 fill-primary" />
+                    <StarIcon className="w-5 h-5 fill-primary" />
+                    <StarIcon className="w-5 h-5 fill-primary" />
+                    <StarIcon className="w-5 h-5 fill-primary" />
+                  </div>
+                  <p className="text-muted-foreground">This IS As Awesome Product</p>
+                </div>
+              </div>
             </div>
             <div className="mt-6 flex gap-2">
               <Input placeholder="Write Review"/>
