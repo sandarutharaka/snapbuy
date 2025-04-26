@@ -4,11 +4,13 @@ import ShoppingProductTile from "@/components/shopping-view-c/product-tile";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuRadioGroup,DropdownMenuContent, DropdownMenuRadioItem, DropdownMenuTrigger} from "@/components/ui/dropdown-menu";
 import { sortOptions } from "@/config";
+import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
 import { fetchAllFilteredProducts, fetchProductDetails } from "@/store/shop/products-slice";
 import { ArrowUpDown } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createSearchParams, useSearchParams } from "react-router-dom";
+import { toast } from "sonner";
 
 
 function createSearchParamsHelper(filterParams){
@@ -36,6 +38,7 @@ const ShoppingListing = () => {
   const[sort,setSort]=useState(null)
   const [searchParams , setSearchParams]=useSearchParams()
   const [openDetailsDialog,setOpenDetailsDialog]=useState(false)
+  const {user} =useSelector(state=>state.auth)
 
 
   function handleSort(value){ 
@@ -73,6 +76,19 @@ const ShoppingListing = () => {
       
   }
 
+  function handleAddtoCart(getCurrentProductId){
+    console.log(getCurrentProductId);
+    dispatch(addToCart({userId :user?.id,productId:getCurrentProductId,quantity :1})).then((data)=>{
+      if(data?.payload?.success){
+        
+        dispatch(fetchCartItems(user?.id))
+        toast.success("Product is Added to Cart")
+      }
+    }
+    )
+    
+  }
+
   useEffect(
     ()=>{if(filters&& Object.keys(filters).length > 0){
       const createQueryString = createSearchParamsHelper(filters)
@@ -91,12 +107,13 @@ const ShoppingListing = () => {
       dispatch(fetchAllFilteredProducts({filterParams:filters ,sortParams :sort}));
     },[dispatch,sort,filters]);
 
-    console.log(productDetails, "productDetails");
+  
 
     useEffect(()=>{
       if(productDetails!== null) setOpenDetailsDialog(true)
     },[productDetails])
 
+    
 
     
   return (
@@ -135,7 +152,7 @@ const ShoppingListing = () => {
             {
               productList && productList.length > 0 ?
               productList.map((productItem)=>(
-                <ShoppingProductTile handleGetProductDetails={handleGetProductDetails} key={productItem?.id} product={productItem}/>
+                <ShoppingProductTile handleAddtoCart={handleAddtoCart} handleGetProductDetails={handleGetProductDetails} key={productItem?.id} product={productItem}/>
               )) : null
             }
         </div>
