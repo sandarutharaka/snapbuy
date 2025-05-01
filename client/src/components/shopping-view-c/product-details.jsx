@@ -4,8 +4,28 @@ import { Button } from "../ui/button";
 import { Dialog, DialogContent } from "../ui/dialog";
 import { Separator } from "../ui/separator";
 import { Input } from "../ui/input";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "sonner";
+import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
 
 function ProductDetailsDialog({ open, setOpen, productDetails }) {
+
+  const dispatch =useDispatch();
+  
+    function handleAddtoCart(getCurrentProductId){
+      console.log(getCurrentProductId);
+      dispatch(addToCart({userId :user?.id,productId:getCurrentProductId,quantity :1})).then((data)=>{
+        if(data?.payload?.success){
+          
+          dispatch(fetchCartItems(user?.id))
+          toast.success("Product is Added to Cart")
+        }
+      }
+      )
+      
+    }
+
+    const {user}=useSelector(state=>state.auth)
   return (
     <Dialog  open={open} onOpenChange={setOpen} >
       <DialogContent className="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:p-12 max-w-[90vw] sm:max-w-[80vw lg:max-w-[70vw]">
@@ -53,7 +73,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
           </div>
           <div className="flex-col flex gap-3 mt-5">
             <Separator />
-            <Button className="p-5">Add to Cart</Button>
+            <Button onClick={()=>handleAddtoCart(productDetails?._id)} className="p-5">Add to Cart</Button>
             <Button className="p-5">Buy</Button>
           </div>
           <div className="max-h-[300px] overflow-auto">
